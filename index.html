@@ -193,12 +193,7 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="studySearch" placeholder="ショップ名で検索..." oninput="searchShops(this.value)">
             </div>
-            <div class="search-box-study">
-    <i class="fas fa-search"></i>
-    <input type="text" id="studySearch" placeholder="ショップ名で検索..." oninput="searchShops(this.value)">
-</div>
-
-<!-- 追加：五十音フィルタ -->
+            <!-- 追加：五十音フィルタ -->
 <div class="kana-filter">
     <button onclick="setKanaFilter('all')" class="filter-char active">全</button>
     <button onclick="setKanaFilter('a')">あ</button>
@@ -224,6 +219,10 @@
     <button onclick="setAlphaFilter('F')">F</button>
     <button onclick="setAlphaFilter('G')">G</button>
 </div>
+            
+</div>
+
+
 
             <div class="shop-list" id="shopList">
                 <!-- ショップリストがJavaScriptで動的に生成されます -->
