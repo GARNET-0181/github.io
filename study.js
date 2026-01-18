@@ -1,3 +1,93 @@
+let currentKana = 'all';
+let currentAlpha = 'all';
+//五十音判定ロジック（追加）
+function normalizeInitial(name) {
+    const first = name.trim()[0];
+    if (!first) return '';
+
+    // アルファベット
+    if (/[A-Za-z]/.test(first)) {
+        return first.toUpperCase();
+    }
+
+    // カタカナ → ひらがな
+    const hira = first.replace(/[\u30a1-\u30f6]/g, m =>
+        String.fromCharCode(m.charCodeAt(0) - 0x60)
+    );
+
+    return hira;
+}
+
+function setKanaFilter(group) {
+    currentKana = group;
+    currentAlpha = 'all';
+    updateFilterUI();
+    applyAllFilters();
+}
+
+function setAlphaFilter(letter) {
+    currentAlpha = letter;
+    currentKana = 'all';
+    updateFilterUI();
+    applyAllFilters();
+}
+function applyAllFilters() {
+    const keyword = document.getElementById('studySearch').value.toLowerCase();
+
+    const filtered = allShops.filter(shop => {
+        // 建物フィルタ
+        if (currentBuilding !== 'all' && shop.building !== currentBuilding) {
+            return false;
+        }
+
+        // 検索
+        if (!shop.name.toLowerCase().includes(keyword)) {
+            return false;
+        }
+
+        const initial = normalizeInitial(shop.name);
+
+        // アルファベット
+        if (currentAlpha !== 'all') {
+            return initial === currentAlpha;
+        }
+
+        // 五十音
+        if (currentKana !== 'all') {
+            return getKanaGroup(initial) === currentKana;
+        }
+
+        return true;
+    });
+
+    renderShopList(filtered);
+}
+
+function updateFilterUI() {
+    document.querySelectorAll('.filter-char').forEach(btn => {
+        btn.classList.remove('active');
+    });
+
+    document.querySelectorAll(`[onclick*="'${currentKana}'"], [onclick*="'${currentAlpha}'"]`)
+        .forEach(btn => btn.classList.add('active'));
+}
+
+// ひらがなグループ判定
+function getKanaGroup(char) {
+    if ('あいうえお'.includes(char)) return 'a';
+    if ('かきくけこ'.includes(char)) return 'ka';
+    if ('さしすせそ'.includes(char)) return 'sa';
+    if ('たちつてと'.includes(char)) return 'ta';
+    if ('なにぬねの'.includes(char)) return 'na';
+    if ('はひふへほ'.includes(char)) return 'ha';
+    if ('まみむめも'.includes(char)) return 'ma';
+    if ('やゆよ'.includes(char)) return 'ya';
+    if ('らりるれろ'.includes(char)) return 'ra';
+    if ('わをん'.includes(char)) return 'wa';
+    return '';
+}
+
+
 // 学習モードの状態管理
 let studyState = {
     currentFilter: 'all',
@@ -110,12 +200,19 @@ function filterShops(building) {
     // リストを再表示
     displayShopList();
 }
+// 初期表示
+applyAllFilters();
+
 
 // ショップを検索
 function searchShops(query) {
     studyState.searchQuery = query;
     displayShopList();
 }
+
+// 初期表示
+applyAllFilters();
+
 
 // 学習モードの統計情報を生成
 function getStudyStats() {

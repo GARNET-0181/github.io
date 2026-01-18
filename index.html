@@ -113,6 +113,11 @@
                         <p class="feedback-detail"></p>
                     </div>
                 </div>
+
+                <!-- フロアマップ表示エリア -->
+                <div id="floorMapContainer" class="floor-map-container" style="display: none; margin-top: 20px; text-align: center;">
+                    <canvas id="floorMapCanvas" width="600" height="400" style="border: 2px solid #ddd; border-radius: 8px; background: #f9f9f9; max-width: 100%;"></canvas>
+                </div>
             </div>
         </div>
 
@@ -188,6 +193,37 @@
                 <i class="fas fa-search"></i>
                 <input type="text" id="studySearch" placeholder="ショップ名で検索..." oninput="searchShops(this.value)">
             </div>
+            <div class="search-box-study">
+    <i class="fas fa-search"></i>
+    <input type="text" id="studySearch" placeholder="ショップ名で検索..." oninput="searchShops(this.value)">
+</div>
+
+<!-- 追加：五十音フィルタ -->
+<div class="kana-filter">
+    <button onclick="setKanaFilter('all')" class="filter-char active">全</button>
+    <button onclick="setKanaFilter('a')">あ</button>
+    <button onclick="setKanaFilter('ka')">か</button>
+    <button onclick="setKanaFilter('sa')">さ</button>
+    <button onclick="setKanaFilter('ta')">た</button>
+    <button onclick="setKanaFilter('na')">な</button>
+    <button onclick="setKanaFilter('ha')">は</button>
+    <button onclick="setKanaFilter('ma')">ま</button>
+    <button onclick="setKanaFilter('ya')">や</button>
+    <button onclick="setKanaFilter('ra')">ら</button>
+    <button onclick="setKanaFilter('wa')">わ</button>
+</div>
+
+<!-- 追加：アルファベットフィルタ -->
+<div class="alpha-filter">
+    <button onclick="setAlphaFilter('all')" class="filter-char active">ALL</button>
+    <button onclick="setAlphaFilter('A')">A</button>
+    <button onclick="setAlphaFilter('B')">B</button>
+    <button onclick="setAlphaFilter('C')">C</button>
+    <button onclick="setAlphaFilter('D')">D</button>
+    <button onclick="setAlphaFilter('E')">E</button>
+    <button onclick="setAlphaFilter('F')">F</button>
+    <button onclick="setAlphaFilter('G')">G</button>
+</div>
 
             <div class="shop-list" id="shopList">
                 <!-- ショップリストがJavaScriptで動的に生成されます -->
